@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CO2 Emission Predictor</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #1e40af 0%, #60a5fa 100%);
+      color: #1f2937;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Header */
+    header {
+      background: #1e3a8a;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    header .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    header .auth a {
+      color: #a5b4fc;
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 1rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+    header .auth a:hover {
+      color: white;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 120px 2rem 4rem;
+      text-align: center;
+      position: relative;
+      z-index: 5;
+      color: white;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%231e3a8a" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,245.3C960,224,1056,160,1152,149.3C1248,139,1344,181,1392,202.7L1440,224L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>') no-repeat bottom center;
+      background-size: cover;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+    .hero h1 span {
+      color: #93c5fd;
+    }
+    .hero p.stats {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      color: #e0f2fe;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Form Card */
+    .form-card {
+      max-width: 900px;
+      margin: -80px auto 0;
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+      position: relative;
+    }
+    .form-card h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #1e3a8a;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Form Inputs */
+    .row.g-4 {
+      margin-top: 1rem;
+    }
+    .input-group-text {
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+      padding: 10px 12px;
+    }
+    input.form-control, select.form-select {
+      border-radius: 0 8px 8px 0;
+      padding: 10px 15px;
+      font-size: 0.95rem;
+      border: 1px solid #d1d5db;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    input.form-control:focus, select.form-select:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+      outline: none;
+    }
+    select.form-select:invalid {
+      color: #6b7280;
+    }
+    label.form-label {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #1f2937;
+      margin-bottom: 5px;
+    }
+
+    /* Submit Button */
+    .btn-primary {
+      background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+      border: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 12px;
+      border-radius: 10px;
+      transition: background 0.3s ease, transform 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(90deg, #1e40af, #2563eb);
+      transform: translateY(-2px);
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    .btn-primary:hover::after {
+      left: 100%;
+    }
+    .btn-primary .spinner-border {
+      display: none;
+      width: 1.2rem;
+      height: 1.2rem;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+    .btn-primary.loading .spinner-border {
+      display: inline-block;
+    }
+    .btn-primary.loading span {
+      display: none;
+    }
+
+    /* Prediction Result */
+    .result {
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 1rem 1.5rem;
+      background: #eff6ff;
+      border-left: 5px solid #1e3a8a;
+      border-radius: 8px;
+      color: #1e3a8a;
+      animation: slideFadeIn 0.5s ease forwards;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .result i {
+      font-size: 1.3rem;
+    }
+
+    /* CTAs Section */
+    .ctas {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 3rem 1rem;
+      flex-wrap: wrap;
+      background: #f0f7ff;
+    }
+    .cta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #1e3a8a;
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .cta:hover {
+      color: #3b82f6;
+    }
+
+    /* Animations */
+    @keyframes slideFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .hero p.stats {
+        font-size: 1rem;
+      }
+      .form-card {
+        margin-top: -60px;
+        padding: 1.5rem;
+      }
+      .form-card h2 {
+        font-size: 1.5rem;
+      }
+      header .logo {
+        font-size: 1.2rem;
+      }
+      header .auth a {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">CO2 Predictor</div>
+    <div class="auth">
+    
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Track. Predict. <span>Reduce.</span></h1>
+    
+  </section>
+
+  <!-- Prediction Form -->
+  <div class="form-card">
+    <h2>Predict Your Vehicle's CO2 Emissions</h2>
+    <form method="POST" action="/predict" novalidate id="predict-form">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <label for="engine_size" class="form-label">Engine Size (L)</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-speedometer2"></i></span>
+            <input
+              type="number"
+              id="engine_size"
+              name="engine_size"
+              class="form-control"
+              step="0.1"
+              min="0"
+              placeholder="e.g., 2.0"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="cylinders" class="form-label">Number of Cylinders</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-gear-fill"></i></span>
+            <input
+              type="number"
+              id="cylinders"
+              name="cylinders"
+              class="form-control"
+              min="1"
+              placeholder="e.g., 4"
+              required
+            />
+          </div>
+        </div>
+
+        
+
+        
+        <div class="col-md-6">
+          <label for="fuel_consumption_comb" class="form-label">Fuel Consumption Comb (L/100 km)</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-fuel-pump"></i></span>
+            <input
+              type="number"
+              id="fuel_consumption_comb"
+              name="fuel_consumption_comb"
+              class="form-control"
+              step="0.1"
+              min="0"
+              placeholder="e.g., 8.5"
+              required
+            />
+          </div>
+        </div>
+
+
+
+        <div class="col-md-4">
+          <label for="fuel_type" class="form-label">Fuel Type</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-droplet-fill"></i></span>
+            <select id="fuel_type" name="fuel_type" class="form-select" required>
+              <option value="" selected disabled>Select fuel type...</option>
+              <option value="Z">Premium Gasoline (Z)</option>
+              <option value="X">Regular Gasoline (X)</option>
+              <option value="D">Diesel (D)</option>
+              <option value="E">Ethanol (E)</option>
+              <option value="N">Natural Gas (N)</option>
+            </select>
+          </div>
+        </div>
+
+        
+        <div class="col-md-4">
+          <label for="vehicle_class" class="form-label">Vehicle Class</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-car-front-fill"></i></span>
+            <select id="vehicle_class" name="vehicle_class" class="form-select" required>
+              <option value="" selected disabled>Select vehicle class...</option>
+              <option value="COMPACT">Compact</option>
+              <option value="SUV - SMALL">SUV - Small</option>
+              <option value="MID-SIZE">Mid-Size</option>
+              <option value="TWO-SEATER">Two-Seater</option>
+              <option value="MINICOMPACT">Minicompact</option>
+              <option value="SUBCOMPACT">Subcompact</option>
+              <option value="FULL-SIZE">Full-Size</option>
+              <option value="STATION WAGON - SMALL">Station Wagon - Small</option>
+              <option value="SUV - STANDARD">SUV - Standard</option>
+              <option value="VAN - CARGO">Van - Cargo</option>
+              <option value="VAN - PASSENGER">Van - Passenger</option>
+              <option value="PICKUP TRUCK - STANDARD">Pickup Truck - Standard</option>
+              <option value="MINIVAN">Minivan</option>
+              <option value="SPECIAL PURPOSE VEHICLE">Special Purpose Vehicle</option>
+              <option value="STATION WAGON - MID-SIZE">Station Wagon - Mid-Size</option>
+              <option value="PICKUP TRUCK - SMALL">Pickup Truck - Small</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">
+            <span>Predict Emissions</span>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      {% if prediction_text %}
+        <div class="result mt-4" role="alert" aria-live="polite">
+          <i class="bi bi-check-circle-fill"></i>
+          {{ prediction_text }}
+        </div>
+      {% endif %}
+    </form>
+  </div>
+
+  <!-- CTAs -->
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Add loading state to button on form submit
+    document.getElementById('predict-form').addEventListener('submit', function() {
+      const button = this.querySelector('button[type="submit"]');
+      button.classList.add('loading');
+      button.disabled = true;
+    });
+
+    // Reset button state on page load
+    window.addEventListener('load', function() {
+      const button = document.querySelector('button[type="submit"]');
+      button.classList.remove('loading');
+      button.disabled = false;
+    });
+  </script>
+</body>
+</html>
