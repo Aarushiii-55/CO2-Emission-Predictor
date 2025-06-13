@@ -286,13 +286,13 @@
     <form method="POST" action="/predict" novalidate id="predict-form">
       <div class="row g-4">
         <div class="col-md-6">
-          <label for="engine_size" class="form-label">Engine Size (L)</label>
+          <label for="Engine_Size" class="form-label">Engine Size (L)</label>
           <div class="input-group">
             <span class="input-group-text"><i class="bi bi-speedometer2"></i></span>
             <input
               type="number"
-              id="engine_size"
-              name="engine_size"
+              id="Engine_Size"
+              name="Engine_Size"
               class="form-control"
               step="0.1"
               min="0"
@@ -303,13 +303,13 @@
         </div>
 
         <div class="col-md-6">
-          <label for="cylinders" class="form-label">Number of Cylinders</label>
+          <label for="Cylinders" class="form-label">Number of Cylinders</label>
           <div class="input-group">
             <span class="input-group-text"><i class="bi bi-gear-fill"></i></span>
             <input
               type="number"
-              id="cylinders"
-              name="cylinders"
+              id="Cylinders"
+              name="Cylinders"
               class="form-control"
               min="1"
               placeholder="e.g., 4"
@@ -322,13 +322,13 @@
 
         
         <div class="col-md-6">
-          <label for="fuel_consumption_comb" class="form-label">Fuel Consumption Comb (L/100 km)</label>
+          <label for="Fuel_Consumption_Comb" class="form-label">Fuel Consumption Comb (L/100 km)</label>
           <div class="input-group">
             <span class="input-group-text"><i class="bi bi-fuel-pump"></i></span>
             <input
               type="number"
-              id="fuel_consumption_comb"
-              name="fuel_consumption_comb"
+              id="Fuel_Consumption_Comb"
+              name="Fuel_Consumption_Comb"
               class="form-control"
               step="0.1"
               min="0"
@@ -341,26 +341,41 @@
 
 
         <div class="col-md-4">
-          <label for="fuel_type" class="form-label">Fuel Type</label>
+          <label for="Fuel_Type" class="form-label">Fuel Type</label>
           <div class="input-group">
             <span class="input-group-text"><i class="bi bi-droplet-fill"></i></span>
-            <select id="fuel_type" name="fuel_type" class="form-select" required>
-              <option value="" selected disabled>Select fuel type...</option>
-              <option value="Z">Premium Gasoline (Z)</option>
-              <option value="X">Regular Gasoline (X)</option>
-              <option value="D">Diesel (D)</option>
-              <option value="E">Ethanol (E)</option>
-              <option value="N">Natural Gas (N)</option>
+            <select id="Fuel_Type" name="Fuel_Type" class="form-select" required>
+              <option value="" selected disabled>Select Fuel Type...</option>
+              <option value="Premium Gasoline">Premium Gasoline (Z)</option>
+              <option value="Regular Gasoline">Regular Gasoline (X)</option>
+              <option value="Diesel">Diesel (D)</option>
+              <option value="Ethanol(E85)">Ethanol (E)</option>
+
             </select>
           </div>
         </div>
 
+        <div class="col-md-4">
+          <label for="Transmission" class="form-label">Transmission Type</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-shift-fill"></i></span>
+            <select id="Transmission" name="Transmission" class="form-select" required>
+              <option value="" selected disabled>Select transmission...</option>
+              <option value="Automatic">Automatic (A)</option>
+              <option value="Manual">Manual (M)</option>
+              <option value="Automated Manual">Automated Manual (AM)</option>
+              <option value="Continuously Variable">Continuously Variable (CVT)</option>
+              </select>
+           </div>
+        </div>
+
+
         
         <div class="col-md-4">
-          <label for="vehicle_class" class="form-label">Vehicle Class</label>
+          <label for="Vehicle_Class" class="form-label">Vehicle Class</label>
           <div class="input-group">
             <span class="input-group-text"><i class="bi bi-car-front-fill"></i></span>
-            <select id="vehicle_class" name="vehicle_class" class="form-select" required>
+            <select id="Vehicle_Class" name="Vehicle_Class" class="form-select" required>
               <option value="" selected disabled>Select vehicle class...</option>
               <option value="COMPACT">Compact</option>
               <option value="SUV - SMALL">SUV - Small</option>
